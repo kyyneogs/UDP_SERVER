@@ -27,35 +27,19 @@ void UdpServer::init() {
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(port);
+    recvLen = sizeof(clientAddr);
 
     if (bind(serverSock, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
         ErrorHandling("udp socket bind failed.");
 }
 
-void UdpServer::recvMessage() {
-    char buff[1024];
-    socklen_t recvLen;
-
-    recvLen = sizeof(clientAddr);
-    messageSize = recvfrom(serverSock, buff, sizeof(buff), 0,
+void UdpServer::recvMessage(unsigned char* recvBuff) {
+    int msgLen = recvfrom(serverSock, (char*)recvBuff, RECV_BUFF, 0,
                     (struct sockaddr*)&clientAddr, &recvLen);
 
-    if (messageSize == -1){
+    if (msgLen == -1) {
         std::cout << "recive Failed.";
+        return;
     }
-
-    switch(messageSize){
-        case -1:
-            std::cout << "recieve Failed.";
-            close(serverSock);
-            exit(1);
-            break;
-        
-        case 0:
-            break;
-        
-        default:
-            buff[messageSize] = '\0';
-            std::cout << buff << "\n";
-    }
+    recvBuff[msgLen] = '\0';
 }

@@ -7,7 +7,11 @@ int main() {
     
     std::cout << "Server Listener Started!\n";
 
+    unsigned char recvBuff[RECV_BUFF] = {0, };
     while(1){
-        server.recvMessage();
+        server.recvMessage(recvBuff);
+        if (recvBuff[0] == 0)
+            break;
+        std::cout << recvBuff << "\n";
     }
 }
