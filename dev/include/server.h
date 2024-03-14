@@ -1,4 +1,3 @@
-#include <iostream>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -13,6 +12,6 @@ private:
 public:
     UdpServer(int port);
     ~UdpServer();
-    int init();
+    void init();
     void recvMessage();
 };

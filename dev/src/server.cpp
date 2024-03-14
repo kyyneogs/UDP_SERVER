@@ -1,4 +1,10 @@
+#include <iostream>
 #include <server.h>
+
+void ErrorHandling(std::string msg) {
+    std::cout << msg;
+    exit(1);
+}
 
 UdpServer::UdpServer(int port) {
     memset(&serverAddr, 0, sizeof(serverAddr));
@@ -13,23 +19,17 @@ UdpServer::~UdpServer() {
 /*
     * initialize socket information
 */
-int UdpServer::init() {
+void UdpServer::init() {
     serverSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (serverSock == -1) {
-        // error_handling("udp socket create failed.");
-        return 1;
-    }
+    if (serverSock == -1)
+        ErrorHandling("udp socket create failed.");
     
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(port);
 
-    if (bind(serverSock, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
-        // error_handling("udp socket bind failed.");
-        return 2;
-    }
-
-    return 0;
+    if (bind(serverSock, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
+        ErrorHandling("udp socket bind failed.");
 }
 
 void UdpServer::recvMessage() {

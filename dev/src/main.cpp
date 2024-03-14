@@ -1,12 +1,9 @@
+#include <iostream>
 #include <server.h>
 
 int main() {
     UdpServer server(8080);
-    int serverOK = server.init();
-    if (serverOK != 0){
-        std::cout << "server Init Failed.";
-        return 0;
-    }
+    server.init();
     
     std::cout << "Server Listener Started!\n";
 
