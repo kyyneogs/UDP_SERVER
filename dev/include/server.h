@@ -11,9 +11,8 @@ private:
     struct sockaddr_in serverAddr, clientAddr;
 
 public:
-    UdpServer(int);
+    UdpServer(int port);
     ~UdpServer();
-    void setPort(int);
-    int sockInit();
+    int init();
     void recvMessage();
 };

@@ -1,19 +1,19 @@
-#include "../include/server.hpp"
+#include <server.h>
 
-UdpServer::UdpServer() {
+UdpServer::UdpServer(int port) {
     memset(&serverAddr, 0, sizeof(serverAddr));
     memset(&clientAddr, 0, sizeof(clientAddr));
+    this->port = port;
 }
 
 UdpServer::~UdpServer() {
     close(serverSock);
 }
 
-void UdpServer::setPort(int port) {
-    this->port = port;
-}
-
-int UdpServer::sockInit() {
+/*
+    * initialize socket information
+*/
+int UdpServer::init() {
     serverSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (serverSock == -1) {
         // error_handling("udp socket create failed.");
