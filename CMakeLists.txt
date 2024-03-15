@@ -11,3 +11,6 @@ file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/dev/src/*.cpp)
 add_executable(Udp_Server ${SOURCES})
 
 target_include_directories(Udp_Server PUBLIC ${CMAKE_SOURCE_DIR}/dev/include)
+if (WIN32)
+    target_link_libraries(Udp_Server PUBLIC ws2_32)
+endif()

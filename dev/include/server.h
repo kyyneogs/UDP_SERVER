@@ -1,6 +1,11 @@
+#ifdef _WIN32
+#include <WS2tcpip.h>
+
+#else
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#endif
 
 #define RECV_BUFF 1024
 
@@ -9,7 +14,11 @@ private:
     int port;
     int serverSock;
     struct sockaddr_in serverAddr, clientAddr;
-    socklen_t recvLen;
+#ifdef _WIN32
+    int clientLen;
+#else
+    socklen_t clientLen;
+#endif
 
 public:
     UdpServer(int port);
