@@ -1,17 +1,19 @@
-#include <iostream>
 #include <server.h>
+#include <iostream>
 
-int main() {
-    UdpServer server(8080);
-    server.init();
-    
-    std::cout << "Server Listener Started!\n";
+int main()
+{
+  UdpServer server(8080);
+  server.init();
 
-    unsigned char recvBuff[RECV_BUFF] = {0, };
-    while(1){
-        server.recvMessage(recvBuff);
-        if (recvBuff[0] == 0)
-            break;
-        std::cout << recvBuff << "\n";
-    }
+  std::cout << "Server Listener Started!\n";
+
+  unsigned char recvBuff[RECV_BUFF] = {0, };
+  while (1)
+  {
+    server.recvMessage(recvBuff);
+    if (recvBuff[0] == 0)
+      break;
+    std::cout << recvBuff << "\n";
+  }
 }
